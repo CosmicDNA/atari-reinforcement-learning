@@ -27,6 +27,8 @@ dataproperty==1.1.0
     # via
     #   pytablewriter
     #   tabledata
+decorator==5.2.1
+    # via moviepy
 farama-notifications==0.0.4
     # via gymnasium
 filelock==3.18.0
@@ -55,6 +57,10 @@ huggingface-sb3==3.0
     # via rl-zoo3
 idna==3.10
     # via requests
+imageio==2.37.0
+    # via moviepy
+imageio-ffmpeg==0.6.0
+    # via moviepy
 jinja2==3.1.6
     # via torch
 kiwisolver==1.4.8
@@ -76,6 +82,8 @@ mbstrdecoder==1.1.4
     #   typepy
 mdurl==0.1.2
     # via markdown-it-py
+moviepy==2.2.1
+    # via -r requirements/requirements.in
 mpmath==1.3.0
     # via sympy
 networkx==3.5
@@ -86,7 +94,9 @@ numpy==2.3.1
     #   contourpy
     #   gymnasium
     #   huggingface-sb3
+    #   imageio
     #   matplotlib
+    #   moviepy
     #   opencv-python
     #   optuna
     #   pandas
@@ -144,7 +154,12 @@ pandas==2.3.1
 pathvalidate==3.3.1
     # via pytablewriter
 pillow==11.3.0
-    # via matplotlib
+    # via
+    #   imageio
+    #   matplotlib
+    #   moviepy
+proglog==0.1.12
+    # via moviepy
 pygments==2.19.2
     # via rich
 pyparsing==3.2.3
@@ -156,6 +171,8 @@ python-dateutil==2.9.0.post0
     #   matplotlib
     #   pandas
     #   typepy
+python-dotenv==1.1.1
+    # via moviepy
 pytz==2025.2
     # via
     #   pandas
@@ -202,6 +219,7 @@ tqdm==4.67.1
     # via
     #   huggingface-hub
     #   optuna
+    #   proglog
     #   rl-zoo3
 triton==3.3.1
     # via torch

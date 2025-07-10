@@ -86,7 +86,13 @@ To save a video of your agent playing, use the recording script. The video will 
 
 ## 🔧 Customization
 
-The shell scripts in the `scripts/` folder are your main entry points. You can easily change the game or algorithm by editing the arguments within these files. For example, to train a **DQN** agent on **Pong**, you would edit `scripts/train.sh` to change the `--algo` and `--env` flags.
+All experiment parameters are centralized in `scripts/config.sh`. To change the game, algorithm, or hyperparameters for all scripts at once, simply edit this file.
+
+For example, to train a **DQN** agent on **Pong**, you would modify `scripts/config.sh` like this:
+```shell
+ALGO="dqn"
+ENV="ALE/Pong-v5"
+```
 
 ## 📁 Project Structure
 
