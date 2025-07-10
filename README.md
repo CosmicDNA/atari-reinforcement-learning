@@ -7,6 +7,7 @@ The core of the project leverages powerful libraries like Stable-Baselines3 and 
 ## ✨ Key Features
 
 -   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh` and `resume-training.sh`) to abstract away complex commands.
+-   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh`) to abstract away complex commands.
 -   **Powered by RL Zoo:** Leverages the robust framework of `rl-zoo3` for training, evaluation, and hyperparameter management.
 -   **Reproducible Environment:** Uses `uv` for fast and consistent dependency installation.
 -   **Easy to Customize:** Scripts can be easily modified to train on different Atari games or with different RL algorithms.
@@ -69,7 +70,7 @@ To start training an agent from scratch, run the training script. This will save
 ### Resume Training
 If a training session was interrupted, you can resume from the last saved checkpoint.
 ```bash
-./scripts/resume-training.sh
+./scripts/train.sh --resume
 ```
 
 ### Watch the Agent Play
