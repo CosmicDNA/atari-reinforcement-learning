@@ -1,0 +1,4 @@
+gymnasium[atari]
+rl-zoo3
+torch
+opencv-python
