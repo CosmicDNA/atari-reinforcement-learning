@@ -13,7 +13,6 @@ https://github.com/user-attachments/assets/1eeab7b2-821d-4fc6-a5e1-e80a8bb1ddb7
 ## ✨ Key Features
 
 -   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh` and `resume-training.sh`) to abstract away complex commands.
--   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh`) to abstract away complex commands.
 -   **Powered by RL Zoo:** Leverages the robust framework of `rl-zoo3` for training, evaluation, and hyperparameter management.
 -   **Reproducible Environment:** Uses `uv` for fast and consistent dependency installation.
 -   **Easy to Customize:** Scripts can be easily modified to train on different Atari games or with different RL algorithms.
