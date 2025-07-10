@@ -5,7 +5,9 @@ This project provides a streamlined setup for training and evaluating reinforcem
 The core of the project leverages powerful libraries like Stable-Baselines3 and RL-Baselines3-Zoo to do the heavy lifting.
 
 
-https://github.com/user-attachments/assets/7a5b4767-d267-4165-adf0-7d612428fd8e
+
+https://github.com/user-attachments/assets/1eeab7b2-821d-4fc6-a5e1-e80a8bb1ddb7
+
 
 
 ## ✨ Key Features
