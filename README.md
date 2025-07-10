@@ -5,14 +5,13 @@ This project provides a streamlined setup for training and evaluating reinforcem
 The core of the project leverages powerful libraries like Stable-Baselines3 and RL-Baselines3-Zoo to do the heavy lifting.
 
 
-
-https://github.com/user-attachments/assets/1eeab7b2-821d-4fc6-a5e1-e80a8bb1ddb7
+https://github.com/user-attachments/assets/68943893-f0ef-4e58-8dbb-88a6ae038560
 
 
 
 ## ✨ Key Features
 
--   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh` and `resume-training.sh`) to abstract away complex commands.
+-   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh` and `record-video.sh`) to abstract away complex commands.
 -   **Powered by RL Zoo:** Leverages the robust framework of `rl-zoo3` for training, evaluation, and hyperparameter management.
 -   **Reproducible Environment:** Uses `uv` for fast and consistent dependency installation.
 -   **Easy to Customize:** Scripts can be easily modified to train on different Atari games or with different RL algorithms.
@@ -110,3 +109,13 @@ ENV="ALE/Pong-v5"
 ├── .gitignore            # Specifies files to be ignored by Git
 └── README.md             # This file
 ```
+
+## 🤝🏿 Acknowledgements
+
+This project stands on the shoulders of the following giants:
+- [**RL Baselines3 Zoo**](https://github.com/DLR-RM/rl-baselines3-zoo): A Training Framework for Stable Baselines3 Reinforcement Learning Agents.
+- [**Gymnasium**](https://github.com/Farama-Foundation/Gymnasium): A Python library for developing and comparing reinforcement learning algorithms.
+- [**PyTorch**](https://pytorch.org/): An open-source machine learning framework that accelerates the path from research prototyping to production deployment.
+- [**The Arcade Learning Environment**](https://github.com/Farama-Foundation/Arcade-Learning-Environment): A simple framework that allows researchers and hobbyists to develop AI agents for Atari 2600 games.
+- [**Moviepy**](https://github.com/Zulko/moviepy): A Python library for video editing: cuts, concatenations, title insertions, video compositing (a.k.a. non-linear editing), video processing, and creation of custom effects.
+- [**OpenCV**](https://github.com/opencv/opencv-python): Pre-built CPU-only OpenCV packages for Python.
