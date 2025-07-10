@@ -4,7 +4,9 @@ This project provides a streamlined setup for training and evaluating reinforcem
 
 The core of the project leverages powerful libraries like Stable-Baselines3 and RL-Baselines3-Zoo to do the heavy lifting.
 
-<video src="https://github.com/CosmicDNA/atari-reinforcement-learning/raw/development/assets/best-model-ppo-ALE-Breakout-v5-step-0-to-step-5000.mp4" width="600" controls></video>
+
+https://github.com/user-attachments/assets/7a5b4767-d267-4165-adf0-7d612428fd8e
+
 
 ## ✨ Key Features
 
