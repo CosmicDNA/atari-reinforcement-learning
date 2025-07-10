@@ -39,13 +39,13 @@ The core of the project leverages powerful libraries like Stable-Baselines3 and 
     pip install uv
     uv pip install -r requirements/requirements-lock.txt
     ```
-    > [!NOTE] If you modify `requirements/requirements.in`, you can re-compile the `requirements-lock.txt` file with:
-    > `uv pip compile --constraint requirements/constraints.txt requirements/requirements.in -o requirements/requirements-lock.txt`
+> [!NOTE] If you modify `requirements/requirements.in`, you can re-compile the `requirements-lock.txt` file with:
+> `uv pip compile --constraint requirements/constraints.txt requirements/requirements.in -o requirements/requirements-lock.txt`
 
 4.  **Atari ROMs:**
     This project uses `ale-py` to automatically download and install the necessary Atari ROMs during the dependency installation process.
-    > [!CAUTION]
-    > By proceeding with the installation, you are confirming that you have the legal right to use these ROMs.
+> [!CAUTION]
+> By proceeding with the installation, you are confirming that you have the legal right to use these ROMs.
 
 ## 🎮 Usage
 
