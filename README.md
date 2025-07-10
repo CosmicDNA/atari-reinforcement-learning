@@ -4,6 +4,8 @@ This project provides a streamlined setup for training and evaluating reinforcem
 
 The core of the project leverages powerful libraries like Stable-Baselines3 and RL-Baselines3-Zoo to do the heavy lifting.
 
+<video src="https://github.com/CosmicDNA/atari-reinforcement-learning/raw/development/assets/best-model-ppo-ALE-Breakout-v5-step-0-to-step-5000.mp4" width="600" controls></video>
+
 ## ✨ Key Features
 
 -   **Script-based Workflow:** Simple shell scripts (`train.sh`, `enjoy.sh`, `record-video.sh` and `resume-training.sh`) to abstract away complex commands.
