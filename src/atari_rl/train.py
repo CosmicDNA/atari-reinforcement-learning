@@ -1,10 +1,10 @@
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
 from . import config
 
+from rl_zoo3.train import train as rl_zoo3_train # type: ignore
 
 def get_latest_model() -> Path:
     """Finds the latest model file to resume training from."""
@@ -36,9 +36,7 @@ def get_latest_model() -> Path:
 
 def run_training(resume_from: Path | None = None):
     """Constructs and runs the training command."""
-    command = [
-        sys.executable,  # Use the same python interpreter that is running this script
-        "-m", "rl_zoo3.train",
+    args = [
         "--algo", config.ALGO,
         "--env", config.ENV,
         "--log-folder", config.LOG_FOLDER,
@@ -52,16 +50,22 @@ def run_training(resume_from: Path | None = None):
     ]
 
     # Add list-based arguments
-    command.extend(["--env-kwargs"] + config.ENV_KWARGS)
-    command.extend(["--eval-env-kwargs"] + config.ENV_KWARGS)
-    command.extend(["--hyperparams"] + config.HYPERPARAMS)
+    args.extend(["--env-kwargs"] + config.ENV_KWARGS)
+    args.extend(["--eval-env-kwargs"] + config.ENV_KWARGS)
+    args.extend(["--hyperparams"] + config.HYPERPARAMS)
 
     if resume_from:
-        command.extend(["--trained-agent", str(resume_from)])
+        args.extend(["--trained-agent", str(resume_from)])
 
-    print(f"Running command: {' '.join(command)}")
-    subprocess.run(command, check=True)
+    # Temporarily replace sys.argv to pass arguments to the training function
+    original_argv = sys.argv
+    sys.argv = ["train.py"] + args
 
+    print(f"Calling rl_zoo3.train with args: {' '.join(args)}")
+    try:
+        rl_zoo3_train()
+    finally:
+        sys.argv = original_argv  # Restore original arguments
 
 def main():
     """Entry point for the atari-train command."""

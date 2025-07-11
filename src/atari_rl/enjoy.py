@@ -1,8 +1,8 @@
 import argparse
-import subprocess
 import sys
 
 from . import config
+from rl_zoo3.enjoy import enjoy as rl_zoo3_enjoy # type: ignore
 
 
 def main():
@@ -11,22 +11,25 @@ def main():
     parser.add_argument("--exp-id", type=int, help="Experiment ID to enjoy.")
     args = parser.parse_args()
 
-    command = [
-        sys.executable,
-        "-m", "rl_zoo3.enjoy",
+    args_list = [
         "--algo", config.ALGO,
         "--env", config.ENV,
         "--folder", config.LOG_FOLDER,
         "--load-best",
     ]
-    command.extend(["--env-kwargs"] + config.ENV_KWARGS)
+    args_list.extend(["--env-kwargs"] + config.ENV_KWARGS)
 
     if args.exp_id is not None:
-        command.extend(["--exp-id", str(args.exp_id)])
+        args_list.extend(["--exp-id", str(args.exp_id)])
 
-    print(f"Running command: {' '.join(command)}")
-    subprocess.run(command, check=True)
+    original_argv = sys.argv
+    sys.argv = ["enjoy.py"] + args_list
 
+    print(f"Calling rl_zoo3.enjoy with args: {' '.join(args_list)}")
+    try:
+        rl_zoo3_enjoy()
+    finally:
+        sys.argv = original_argv
 
 if __name__ == "__main__":
     main()
