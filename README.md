@@ -80,13 +80,13 @@ If a training session was interrupted, you can resume from the last saved checkp
 ### Watch the Agent Play
 Once you have a trained model, you can watch it play the game. This script will load the best-performing model from the `logs/` directory.
 ```bash
-./scripts/enjoy.sh
+./scripts/enjoy.sh # optionally, add “--exp-id n”, where n is the experiment number you want to watch
 ```
 
 ### Record a Video
 To save a video of your agent playing, use the recording script. The video will be saved in a `videos/` folder inside the corresponding log directory.
-```bash
-./scripts/record-video.sh
+```bash “$ALGO”
+./scripts/record-video.sh # optionally, add “--exp-id n”, where n is the experiment number you want to watch
 ```
 
 ## 🔧 Customization
