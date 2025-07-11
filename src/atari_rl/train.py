@@ -1,10 +1,13 @@
-import argparse
 import sys
 from pathlib import Path
 
 from . import config
 
 from rl_zoo3.train import train as rl_zoo3_train # type: ignore
+
+# ANSI color codes
+GRAY = '\033[0;90m'
+NC = '\033[0m'  # No Color
 
 def get_latest_model() -> Path:
     """Finds the latest model file to resume training from."""
@@ -15,7 +18,7 @@ def get_latest_model() -> Path:
     exp_dirs = list(log_path.glob(f"{config.ALGO}/{env_path_name}_*"))
     if not exp_dirs:
         print(f"\033[0;31mError:\033[0m No experiment folder found for '{config.ALGO}' on '{config.ENV}' in '{config.LOG_FOLDER}'.", file=sys.stderr)
-        print("Please run a training session first with 'python scripts/train.py'.", file=sys.stderr)
+        print("Please run a training session first with 'atari-rl train'.", file=sys.stderr)
         sys.exit(1)
 
     # Sort directories by experiment number to find the latest
@@ -61,26 +64,18 @@ def run_training(resume_from: Path | None = None):
     original_argv = sys.argv
     sys.argv = ["train.py"] + args
 
-    print(f"Calling rl_zoo3.train with args: {' '.join(args)}")
+    print(f"Calling rl_zoo3.train with args:\n{GRAY}{' '.join(args)}{NC}")
     try:
         rl_zoo3_train()
     finally:
         sys.argv = original_argv  # Restore original arguments
 
-def main():
-    """Entry point for the atari-train command."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--resume", action="store_true", help="Resume training from the latest checkpoint.")
-    args = parser.parse_args()
-
-    if args.resume:
+def start_training(resume: bool):
+    """Starts a new training session or resumes an existing one."""
+    if resume:
         latest_model = get_latest_model()
         print(f"Resuming training from: {latest_model}")
         run_training(resume_from=latest_model)
     else:
         print("Starting new training session.")
         run_training()
-
-
-if __name__ == "__main__":
-    main()

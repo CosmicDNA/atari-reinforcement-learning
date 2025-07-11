@@ -54,25 +54,25 @@ https://github.com/user-attachments/assets/68943893-f0ef-4e58-8dbb-88a6ae038560
 ### Train a New Agent
 To start training an agent from scratch, run the training script. This will save logs and the trained model in the `logs/` directory.
 ```bash
-atari-train
+atari-rl train
 ```
 
 ### Resume Training
 If a training session was interrupted, you can resume from the last saved checkpoint.
 ```bash
-atari-train --resume
+atari-rl train --resume
 ```
 
 ### Watch the Agent Play
 Once you have a trained model, you can watch it play the game. This script will load the best-performing model from the `logs/` directory.
 ```bash
-atari-enjoy # optionally, add “--exp-id n”, where n is the experiment number you want to watch
+atari-rl enjoy # optionally, add “--exp-id n”, where n is the experiment number you want to watch
 ```
 
 ### Record a Video
 To save a video of your agent playing, use the recording script. The video will be saved in a `videos/` folder inside the corresponding log directory.
-```bash “$ALGO”
-atari-record-video # optionally, add “--exp-id n”, where n is the experiment number you want to watch
+```bash
+atari-rl record-video # optionally, add “--exp-id n”, where n is the experiment number you want to watch
 ```
 
 ## 🔧 Customization
