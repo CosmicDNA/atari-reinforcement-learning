@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atari-reinforcement-learning"
+version = "1.0.0"
+description = "A streamlined setup for training and evaluating reinforcement learning agents on Atari 2600 games."
+authors = [{ name = "DanielAtCosmicDNA", email = "daniel@cosmicdna.co.uk" }] # Please update your name and email
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License", # Assuming MIT, please change if not
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "gym==0.26.2",
+    "gymnasium[atari]",
+    "rl-zoo3",
+    "torch",
+    "opencv-python",
+    "moviepy",
+]
+
+[project.urls]
+Homepage = "https://github.com/CosmicDNA/atari-reinforcement-learning"
+Repository = "https://github.com/CosmicDNA/atari-reinforcement-learning"
+
+[project.scripts]
+atari-train = "atari_rl.train:main"
+atari-enjoy = "atari_rl.enjoy:main"
+atari-record-video = "atari_rl.record_video:main"
