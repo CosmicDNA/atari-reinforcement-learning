@@ -17,6 +17,7 @@ from . import config
 
 # ANSI color codes
 GRAY = '\033[0;90m'
+RED = '\033[0;31m'
 NC = '\033[0m'  # No Color
 
 
@@ -24,7 +25,7 @@ def _check_svgasm_installed():
     """Checks if svgasm is installed and in the system's PATH."""
     if shutil.which("svgasm") is None:
         print(
-            "\033[0;31mError:\033[0m svgasm command not found. Please install svgasm to generate animated SVGs.",
+            f"{RED}Error:{NC} svgasm command not found. Please install svgasm to generate animated SVGs.",
             file=sys.stderr,
         )
         print("Installation instructions: npm install -g svgasm", file=sys.stderr)
@@ -137,9 +138,9 @@ def _save_to_svg(frames: list[np.ndarray], video_path: Path):
         full_svg_string = vtracer.convert_pixels_to_svg(
             rgba_pixels,
             (width, height),
-            mode="polygon",
-            filter_speckle=0,
-            length_threshold=0.0
+            mode="none",            # No path simplification for maximum detail
+            filter_speckle=0,       # No speckle filtering for high detail
+            length_threshold=0.0    # No length threshold to capture all details
         )
 
         # To avoid nested <svg> viewports which can cause rendering issues,
@@ -169,7 +170,7 @@ def _save_to_svg(frames: list[np.ndarray], video_path: Path):
                 ["svgasm", "-o", str(video_path), "-d", "0.01667", *paths], check=True, capture_output=True
             )
         except subprocess.CalledProcessError as e:
-            print(f"\033[0;31mError:\033[0m svgasm failed to assemble the animation.", file=sys.stderr)
+            print("{RED}Error:{NC} svgasm failed to assemble the animation.", file=sys.stderr)
             print(f"svgasm stderr: {e.stderr.decode()}", file=sys.stderr)
             sys.exit(1)
 
