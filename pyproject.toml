@@ -21,8 +21,7 @@ dependencies = [
     "torch",
     "opencv-python",
     "tqdm",
-    "vtracer",
-    "drawsvg"
+    "vtracer"
 ]
 
 [project.urls]
