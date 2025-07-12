@@ -20,7 +20,9 @@ dependencies = [
     "rl-zoo3",
     "torch",
     "opencv-python",
-    "moviepy",
+    "tqdm",
+    "vtracer",
+    "drawsvg"
 ]
 
 [project.urls]

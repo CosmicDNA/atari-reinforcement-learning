@@ -32,4 +32,4 @@ EVAL_EPISODES = "1"
 VEC_ENV = "subproc"
 
 # --- Video Recording Parameters ---
-RECORD_TIMESTEPS = "5000"
+RECORD_TIMESTEPS = "50"
