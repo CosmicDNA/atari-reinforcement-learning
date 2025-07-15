@@ -66,14 +66,22 @@ atari-rl train --resume
 ### Watch the Agent Play
 Once you have a trained model, you can watch it play the game. This script will load the best-performing model from the `logs/` directory.
 ```bash
-atari-rl enjoy # optionally, add “--exp-id n”, where n is the experiment number you want to watch
+atari-rl enjoy
 ```
+
+> [!TIP]
+> optionally, add “--exp-id n”, where n is the experiment number you want to watch
 
 ### Record a Video
 To save a video of your agent playing, use the recording script. The video will be saved in a `videos/` folder inside the corresponding log directory.
 ```bash
-atari-rl record-video # optionally, add “--exp-id n”, where n is the experiment number you want to watch
+atari-rl record-video
 ```
+
+> [!TIP]
+> optionally, add:
+> - “--exp-id n”, where n is the experiment
+> - "--format fparam" where fparam can either be svg, mp4 or all.
 
 ## 🔧 Customization
 
@@ -83,23 +91,6 @@ For example, to train a **DQN** agent on **Pong**, you would modify `src/atari_r
 ```shell
 ALGO="dqn"
 ENV="ALE/Pong-v5"
-```
-
-## 📁 Project Structure
-
-```plaintext
-.
-├── src/
-│   └── atari_rl/         # Main Python package
-│       ├── __init__.py
-│       ├── config.py
-│       ├── train.py
-│       ├── enjoy.py
-│       └── record_video.py
-├── logs/                 # (Created automatically) Stores trained models and TensorBoard logs
-├── .gitignore
-├── pyproject.toml        # Project definition and dependencies
-└── README.md
 ```
 
 ## 🤝🏿 Acknowledgements
