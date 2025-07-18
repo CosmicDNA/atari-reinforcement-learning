@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "atari-reinforcement-learning"
-version = "1.0.5"
+version = "1.0.6"
 description = "A streamlined setup for training and evaluating reinforcement learning agents on Atari 2600 games."
 readme = "README.md"
 authors = [{ name = "DanielAtCosmicDNA", email = "daniel@cosmicdna.co.uk" }]
