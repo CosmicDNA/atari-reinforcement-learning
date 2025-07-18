@@ -98,14 +98,19 @@ If you want to contribute to the project or modify the code, follow these steps 
         pip install -e ".[dev]"
         ```
 
-## 🔧 Customization
+## 🔧 Customization & Configuration
 
-All experiment parameters are centralized in `src/atari_rl/config.py`. To change the game, algorithm, or hyperparameters for all scripts at once, simply edit this file.
+This tool uses a `.env` file in your current working directory to manage experiment configurations. This allows you to maintain separate configurations for different experiments in different folders.
 
-For example, to train a **DQN** agent on **Pong**, you would modify `src/atari_rl/config.py` like this:
-```python
-ALGO = "dqn"
-ENV = "ALE/Pong-v5"
+### How it Works
+
+When you run any `atari-rl` command for the first time in a new directory, the tool will automatically create a `.env` file for you with default settings.
+
+To customize an experiment, simply edit the values in this `.env` file. For example, to train a **DQN** agent on **Pong**, you would modify your `.env` file like this:
+
+```dotenv
+ALGO="dqn"
+ENV="ALE/Pong-v5"
 ```
 
 ## 🤝🏿 Acknowledgements
