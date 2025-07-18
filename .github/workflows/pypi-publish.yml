@@ -1,0 +1,35 @@
+# This workflow will build and publish a Python package to PyPI when a tag is pushed.
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-pypi
+
+name: Publish Python Package to PyPI
+
+on:
+  push:
+    tags:
+      - "v*.*.*" # Trigger on version tags like v1.0.0, v1.2.3, etc.
+
+jobs:
+  pypi-publish:
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      # This permission is essential for trusted publishing
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install build dependencies
+        run: python -m pip install --upgrade build
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
