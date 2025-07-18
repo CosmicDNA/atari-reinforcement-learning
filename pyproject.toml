@@ -10,9 +10,9 @@ authors = [{ name = "DanielAtCosmicDNA", email = "daniel@cosmicdna.co.uk" }]
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+license = "MIT"
 dependencies = [
     "gym==0.26.2",
     "ale-py==0.10.2",
