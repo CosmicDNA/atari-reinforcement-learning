@@ -1,24 +1,22 @@
-from pathlib import Path
 import sys
+from pathlib import Path
+
 import cv2
 import gymnasium as gym
 import numpy as np
+from rl_zoo3.train import ALGOS
+from rl_zoo3.utils import get_saved_hyperparams
 from stable_baselines3.common.atari_wrappers import EpisodicLifeEnv, FireResetEnv, NoopResetEnv
 from tqdm import tqdm
 
-from rl_zoo3.train import ALGOS
-from rl_zoo3.utils import get_model_path, get_saved_hyperparams
-from . import config, svg_generation
-
-# ANSI color codes
-GRAY = '\033[0;90m'
-RED = '\033[0;31m'
-NC = '\033[0m'  # No Color
+from atari_rl import config, svg_generation
+from atari_rl.logger import logger
+from atari_rl.utils import find_model_for_evaluation
 
 
 def _generate_hq_frames(model_path: Path) -> list[np.ndarray]:
-    """
-    Generates a high-quality, 60 FPS list of frames of the agent's gameplay.
+    """Generates a high-quality, 60 FPS list of frames of the agent's gameplay.
+
     This is the single source of truth for recording the same gameplay across multiple formats.
     """
     # 1. Load the model to determine its expected observation shape (n_stack, height, width).
@@ -43,7 +41,7 @@ def _generate_hq_frames(model_path: Path) -> list[np.ndarray]:
     # 4. Set up a manual stack for the agent's observations.
     stacked_frames = np.zeros((n_stack, obs_height, obs_width), dtype=np.uint8)
 
-    print(f"Collecting frames for a {config.RECORD_TIMESTEPS}-step high-quality recording...")
+    logger.info(f"Collecting frames for a {config.RECORD_TIMESTEPS}-step high-quality recording...")
     frames = []
 
     # Reset environment and prepare initial state
@@ -107,9 +105,9 @@ def _generate_hq_frames(model_path: Path) -> list[np.ndarray]:
 
 def _save_to_mp4(frames: list[np.ndarray], video_path: Path):
     """Saves a list of frames as a high-quality MP4 video using OpenCV."""
-    print(f"Saving to MP4 using OpenCV: {video_path}")
+    logger.info(f"Saving to MP4 using OpenCV: {video_path}")
     if not frames:
-        print("Warning: No frames to save for MP4.", file=sys.stderr)
+        logger.warning("No frames to save for MP4.")
         return
 
     height, width, _ = frames[0].shape
@@ -123,35 +121,25 @@ def _save_to_mp4(frames: list[np.ndarray], video_path: Path):
         out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
 
     out.release()
-    print(f"MP4 video saved successfully to {video_path}")
+    logger.info(f"MP4 video saved successfully to {video_path}")
 
 
 def create_video(exp_id: int | None, video_format: str):
     """Constructs and runs the video recording command for the specified format."""
     env_path_name = config.ENV.replace("/", "-")
 
-    # rl-zoo3's get_model_path expects exp_id=0 to find the latest experiment,
-    # but receives None from argparse if the flag is not set.
-    effective_exp_id = exp_id if exp_id is not None else 0
+    model_path, exp_folder = find_model_for_evaluation(exp_id)
+    if not model_path or not exp_folder:
+        sys.exit(1)
 
-    # The get_model_path function returns a tuple of (name_prefix, model_path, log_path).
-    # We use the log_path to ensure videos are saved in the correct experiment directory.
-    _name_prefix, model_path_str, log_path_str = get_model_path(
-        exp_id=effective_exp_id,
-        folder=config.LOG_FOLDER,
-        algo=config.ALGO,
-        env_name=env_path_name,
-        load_best=True,
-    )
-    model_path = Path(model_path_str)
-    log_path = Path(log_path_str)
+    log_path = exp_folder  # The log path is the experiment folder itself.
 
-    print(f"Loading model from: {model_path}")
+    logger.info(f"Loading model from: {model_path}")
 
     # Generate high-quality frames. This is now the single source of truth for all formats.
     frames = _generate_hq_frames(model_path)
     if not frames:
-        print("Error: No frames were recorded.", file=sys.stderr)
+        logger.error("No frames were recorded.")
         sys.exit(1)
 
     # The original rl_zoo3 script saves videos to a 'videos' subfolder within the experiment's log directory.

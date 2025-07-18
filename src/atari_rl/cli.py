@@ -1,6 +1,6 @@
 import argparse
 
-from . import enjoy, record_video, train
+from atari_rl import enjoy, record_video, train
 
 
 def main():
@@ -24,7 +24,9 @@ def main():
     # --- Record Video Command ---
     parser_record = subparsers.add_parser("record-video", help="Record a video of a trained agent.")
     parser_record.add_argument("--exp-id", type=int, help="Experiment ID to record (if not provided, latest is used).")
-    parser_record.add_argument("--format", type=str, choices=["mp4", "svg", "all"], default="mp4", help="Recording format (mp4, svg, or all). Default: mp4")
+    parser_record.add_argument(
+        "--format", type=str, choices=["mp4", "svg", "all"], default="mp4", help="Recording format (mp4, svg, or all). Default: mp4"
+    )
     parser_record.set_defaults(func=lambda args: record_video.create_video(exp_id=args.exp_id, video_format=args.format))
 
     args = parser.parse_args()

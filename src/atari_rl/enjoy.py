@@ -1,38 +1,37 @@
-import argparse
 import sys
 
-from . import config
-from rl_zoo3.enjoy import enjoy as rl_zoo3_enjoy # type: ignore
+from rl_zoo3.enjoy import enjoy as rl_zoo3_enjoy  # type: ignore
 
-# ANSI color codes
-GRAY = '\033[0;90m'
-NC = '\033[0m' # No Color
+from atari_rl import config
+from atari_rl.logger import GRAY, NC, logger
+from atari_rl.utils import find_model_for_evaluation
 
-def main():
-    """Constructs and runs the enjoy command."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--exp-id", type=int, help="Experiment ID to enjoy.")
-    args = parser.parse_args()
+
+def watch_agent(exp_id: int | None = None):
+    """Constructs and runs the enjoy command for a given experiment ID."""
+    model_path, _ = find_model_for_evaluation(exp_id)
+    if not model_path:
+        sys.exit(1)
+
+    logger.info(f"Loading model from: {model_path}")
 
     args_list = [
-        "--algo", config.ALGO,
-        "--env", config.ENV,
-        "--folder", config.LOG_FOLDER,
-        "--load-best",
+        "--algo",
+        config.ALGO,
+        "--env",
+        config.ENV,
+        "--folder",
+        config.LOG_FOLDER,  # Still needed for hyperparams
+        "--trained-agent",
+        str(model_path),
     ]
     args_list.extend(["--env-kwargs"] + config.ENV_KWARGS)
-
-    if args.exp_id is not None:
-        args_list.extend(["--exp-id", str(args.exp_id)])
 
     original_argv = sys.argv
     sys.argv = ["enjoy.py"] + args_list
 
-    print(f"Calling rl_zoo3.enjoy with args:\n{GRAY}{' '.join(args_list)}{NC}")
+    logger.info(f"Calling rl_zoo3.enjoy with args:\n{GRAY}{' '.join(args_list)}{NC}")
     try:
         rl_zoo3_enjoy()
     finally:
         sys.argv = original_argv
-
-if __name__ == "__main__":
-    main()

@@ -1,16 +1,18 @@
-from pathlib import Path
 import re
-import sys
+from pathlib import Path
+
 import numpy as np
 import vtracer
 from tqdm import tqdm
 
+from atari_rl.logger import logger
+
 
 def save_to_svg(frames: list[np.ndarray], video_path: Path):
     """Saves a list of frames as a differentially rendered, animated SVG."""
-    print(f"Saving to SVG using differential rendering: {video_path}")
+    logger.info(f"Saving to SVG using differential rendering: {video_path}")
     if not frames:
-        print("Warning: No frames to save for SVG.", file=sys.stderr)
+        logger.warning("No frames to save for SVG.")
         return
 
     height, width, _ = frames[0].shape
@@ -26,16 +28,14 @@ def save_to_svg(frames: list[np.ndarray], video_path: Path):
     ]
 
     # --- Vectorize and add the first frame (base frame) ---
-    print("Vectorizing base frame...")
+    logger.info("Vectorizing base frame...")
     base_frame = frames[0]
     rgba_frame = np.dstack((base_frame, np.full((height, width), 255, dtype=np.uint8)))
     flat_rgba = rgba_frame.reshape(-1, 4)
     rgba_pixels = [tuple(pixel) for pixel in flat_rgba]
 
     # Use polygon mode for blocky Atari graphics and disable filters for max detail.
-    svg_string = vtracer.convert_pixels_to_svg(
-        rgba_pixels, (width, height), mode="none", filter_speckle=0, length_threshold=0.0
-    )
+    svg_string = vtracer.convert_pixels_to_svg(rgba_pixels, (width, height), mode="none", filter_speckle=0, length_threshold=0.0)
 
     match = re.search(r"<svg[^>]*>(.*)</svg>", svg_string, re.DOTALL)
     if match:
@@ -43,7 +43,7 @@ def save_to_svg(frames: list[np.ndarray], video_path: Path):
         svg_parts.append(f'<g visibility="visible">{match.group(1)}</g>')
 
     # --- Vectorize and add differential frames ---
-    print("Vectorizing differential frames...")
+    logger.info("Vectorizing differential frames...")
     prev_frame = base_frame
     for i, curr_frame in tqdm(enumerate(frames[1:], start=1), total=len(frames) - 1, desc="Processing Diffs"):
         # Find differences between current and previous frame.
@@ -62,9 +62,7 @@ def save_to_svg(frames: list[np.ndarray], video_path: Path):
         # Vectorize the sparse differential frame.
         flat_diff_rgba = diff_rgba.reshape(-1, 4)
         diff_pixels = [tuple(pixel) for pixel in flat_diff_rgba]
-        diff_svg_string = vtracer.convert_pixels_to_svg(
-            diff_pixels, (width, height), mode="none", filter_speckle=0, length_threshold=0.0
-        )
+        diff_svg_string = vtracer.convert_pixels_to_svg(diff_pixels, (width, height), mode="none", filter_speckle=0, length_threshold=0.0)
 
         match = re.search(r"<svg[^>]*>(.*)</svg>", diff_svg_string, re.DOTALL)
         if match:
@@ -81,8 +79,8 @@ def save_to_svg(frames: list[np.ndarray], video_path: Path):
     svg_parts.append("</g>")  # Close the main container group.
     svg_parts.append("</svg>")  # Close the svg.
 
-    print("Writing SVG file...")
+    logger.info("Writing SVG file...")
     with video_path.open("w", encoding="utf-8") as f:
         f.write("".join(svg_parts))
 
-    print(f"Differentially rendered SVG animation saved successfully to {video_path}")
+    logger.info(f"Differentially rendered SVG animation saved successfully to {video_path}")
