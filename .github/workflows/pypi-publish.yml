@@ -8,6 +8,8 @@ on:
     tags:
       - "v*.*.*" # Trigger on version tags like v1.0.0, v1.2.3, etc.
 
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
 jobs:
   pypi-publish:
     name: Upload release to PyPI
