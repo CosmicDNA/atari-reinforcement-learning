@@ -15,82 +15,97 @@ https://github.com/user-attachments/assets/68943893-f0ef-4e58-8dbb-88a6ae038560
 -   **Powered by RL Zoo:** Leverages the robust framework of `rl-zoo3` for training, evaluation, and hyperparameter management.
 -   **Easy to Customize:** Scripts can be easily modified to train on different Atari games or with different RL algorithms.
 
-## 🚀 Getting Started
+## 🚀 Installation
 
-### Prerequisites
+The recommended way to install this tool is directly from PyPI:
 
--   Python 3.8+
+```bash
+pip install atari-reinforcement-learning
+```
 
-### Installation
+This will make the `atari-rl` command available in your environment.
 
-1.  **Clone the repository:**
+> [!CAUTION]
+> **Atari ROMs**: This project uses `ale-py` to automatically download and install the necessary Atari ROMs during the dependency installation process. By proceeding with the installation, you are confirming that you have the legal right to use these ROMs.
+
+## 🎮 Usage
+
+### Train a New Agent
+
+To start training an agent from scratch, run the training script. This will save logs and the trained model in the `logs/` directory.
+
+```bash
+atari-rl train
+```
+
+### Resume Training
+
+If a training session was interrupted, you can resume from the last saved checkpoint.
+
+```bash
+atari-rl train --resume
+```
+
+### Watch the Agent Play
+
+Once you have a trained model, you can watch it play the game. This script will load the best-performing model from your training history.
+
+```bash
+atari-rl enjoy
+```
+
+> [!TIP]
+> To watch a specific experiment, add `--exp-id n`, where `n` is the experiment number.
+
+### Record a Video
+
+To save a video of your agent playing, use the recording script. The video will be saved in a `videos/` folder inside the corresponding log directory.
+
+```bash
+atari-rl record-video
+```
+
+> [!TIP]
+> You can also specify the experiment ID with `--exp-id n` and the output format with `--format <svg|mp4|all>`.
+
+## 🛠️ Developer Setup
+
+If you want to contribute to the project or modify the code, follow these steps to set up a development environment.
+
+1.  **Clone the repository**
     ```bash
     git clone https://github.com/CosmicDNA/atari-reinforcement-learning.git
     cd atari-reinforcement-learning
     ```
 
-2.  **Create and activate a virtual environment:**
+2.  **Create and activate a virtual environment**
     ```bash
     python -m venv .venv
     source .venv/bin/activate
     # On Windows, use: .venv\Scripts\activate
     ```
 
-3.  **Install dependencies:**
-    This project uses `uv` for fast dependency management.
-    ```bash
-    pip install uv
-    uv pip install -e .
-    ```
+3.  **Install in editable mode with development dependencies**
+    This installs the package in a way that your code changes are immediately reflected, and includes tools like `ruff` and `pytest` for development.
 
-4.  **Atari ROMs:**
-    This project uses `ale-py` to automatically download and install the necessary Atari ROMs during the dependency installation process.
-> [!CAUTION]
-> By proceeding with the installation, you are confirming that you have the legal right to use these ROMs.
-
-## 🎮 Usage
-
-
-### Train a New Agent
-To start training an agent from scratch, run the training script. This will save logs and the trained model in the `logs/` directory.
-```bash
-atari-rl train
-```
-
-### Resume Training
-If a training session was interrupted, you can resume from the last saved checkpoint.
-```bash
-atari-rl train --resume
-```
-
-### Watch the Agent Play
-Once you have a trained model, you can watch it play the game. This script will load the best-performing model from the `logs/` directory.
-```bash
-atari-rl enjoy
-```
-
-> [!TIP]
-> optionally, add “--exp-id n”, where n is the experiment number you want to watch
-
-### Record a Video
-To save a video of your agent playing, use the recording script. The video will be saved in a `videos/` folder inside the corresponding log directory.
-```bash
-atari-rl record-video
-```
-
-> [!TIP]
-> optionally, add:
-> - “--exp-id n”, where n is the experiment
-> - "--format fparam" where fparam can either be svg, mp4 or all.
+    *   **Using `uv` (recommended for speed):**
+        ```bash
+        pip install uv
+        uv pip install -e ".[dev]"
+        ```
+    *   **Using `pip`:**
+        ```bash
+        pip install -e ".[dev]"
+        ```
 
 ## 🔧 Customization
 
 All experiment parameters are centralized in `src/atari_rl/config.py`. To change the game, algorithm, or hyperparameters for all scripts at once, simply edit this file.
 
 For example, to train a **DQN** agent on **Pong**, you would modify `src/atari_rl/config.py` like this:
-```shell
-ALGO="dqn"
-ENV="ALE/Pong-v5"
+```python
+ALGO = "dqn"
+ENV = "ALE/Pong-v5"
 ```
 
 ## 🤝🏿 Acknowledgements
