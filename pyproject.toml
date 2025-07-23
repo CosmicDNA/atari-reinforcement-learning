@@ -16,7 +16,6 @@ classifiers = [
 license = "MIT"
 dependencies = [
     "gym==0.26.2",
-    "ale-py==0.10.2",
     "gymnasium[atari]",
     "rl-zoo3",
     "torch",
